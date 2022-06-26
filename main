@@ -1,0 +1,133 @@
+// FCAI – Programming 1 – 2022 - Assignment 2
+// Program Name: Simple Substitution Cipher.cpp
+// Program Description: the user inputs his words and choose if he wants it to cipher of decipher
+// Last Modification Date: 24/3/2022
+// Author1 and ID and Group: Sara Tamer Mohamed Bihery
+// Purpose: It's to cipher of decipher words
+
+
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+//declaration of global variables
+int choice ,z ;
+string key  ;
+char plain[27]  = "abcdefghijklmnopqrstuvwxyz";
+string cipher ;
+char after_cipher[100] , after_decipher[100];
+char lowerSentence[100]  ;
+
+// making the cipher array using the key word
+void cipher_arr(){
+
+  for (int h = 0 ; h < 5 ; h++){
+      for (int f = 0 ; f < 27; f++){
+          if (key[h] == plain[f]){
+             for (f ; f < 27; f++){
+                 plain [f] = plain [f + 1];
+            }
+          }
+      }
+  }
+    cipher = key + plain;
+}
+
+//cipher function
+void real_cipher(string& sentence){
+    char alpha[27]  = "abcdefghijklmnopqrstuvwxyz";
+//    change all the sentence to the lower case
+
+    for (char i : sentence){
+        lowerSentence[z] = (char) tolower(i);
+        z++;
+    }
+//    cipher the lowerSentence
+    int m = 0;
+    int j = 0;
+    while ( j < sentence.length()){
+       for (int n =0; n < 26; n++){
+
+           if (lowerSentence[j] == alpha[n]){
+                after_cipher[m] = cipher[n];
+                m++;
+                j++;
+
+           }
+           else if (lowerSentence[j]== ' '){
+               after_cipher[m] = ' ';
+               m++;
+               j++;
+           }
+       }
+    }
+        cout << after_cipher << endl;
+}
+
+// Deciphering the ciphered
+void deciphering(const string& sentence) {
+
+    char alpha[27]  = "abcdefghijklmnopqrstuvwxyz";
+
+//    change all the sentence to the lower case
+    for (char i : sentence) {
+        lowerSentence[z] = (char) tolower(i);
+        z++;
+    }
+//        Decipher the lowerSentence
+
+    int m = 0;
+    int j = 0;
+    while (j < sentence.length()) {
+        for (int n = 0; n < 26; n++) {
+            if (lowerSentence[j] == cipher[n]) {
+                after_decipher[m] = alpha[n];
+                ++m;
+                ++j;
+            }
+            else if (lowerSentence[j] == ' ') {
+                after_decipher[m] = ' ';
+                ++m;
+                ++j;
+            }
+        }
+    }
+    cout << after_decipher << endl;
+}
+
+    int main() {
+
+        string sentence;
+
+            cout << " What do you like to do?" << endl << " 1- Cipher a message. " << endl << " 2- Decipher a message. "
+                 << endl << " 3- End." << endl;
+            cin >> choice;
+
+            if (choice == 1) {
+                cout << "Please enter 5 letters as a keyword\n";
+                cin >> key;
+                if (key.length()!= 5){
+                    cout << "Please enter 5 letters as a keyword\n";
+                }
+                cout << "Please enter the message to cipher. " << endl;
+                cin.get();
+                getline(cin , sentence);
+                cipher_arr();
+                real_cipher(sentence);
+
+            } else if (choice == 2) {
+                cout << "Please enter 5 letters as keyword\n";
+                cin >> key;
+                if (key.length()!= 5){
+                    cout << "Please enter 5 letters as keyword\n";
+                    cin >> key;
+                }
+                cout << "Please enter the message to decipher. " << endl;
+                cin.get();
+                getline(cin , sentence);
+                cipher_arr();
+                deciphering(sentence);
+            }
+}
